@@ -22,7 +22,7 @@ var defaults = {
 					});
 				}
 			} catch (e) {
-				console.error(e);
+				// console.error(e);
 			}
 		}
 
