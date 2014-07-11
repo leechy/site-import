@@ -5,6 +5,7 @@ var glob = require('glob');
 var crc = require('crc').crc32;
 var chalk = require('chalk');
 var importer = require('../');
+var grunt = require('grunt');
 
 function compare(folder1, folder2) {
 	var list1 = glob.sync('**/*.*', {cwd: folder1}).sort();
@@ -22,25 +23,29 @@ function compare(folder1, folder2) {
 	});
 }
 
+function p(dst) {
+	return path.join(__dirname, dst);
+}
+
 describe('Project importer', function() {
 	it('should import simple projects', function(done) {
 		importer.defaults({
-			out: path.join(__dirname, 'out1')
+			out: p('out1')
 		});
 
 		console.log('');
 
-		importer.importFrom(path.join(__dirname, 'in'), function(err) {
+		importer.importFrom(p('in'), function(err) {
 			assert(!err);
-			compare(path.join(__dirname, 'out1/p1'), path.join(__dirname, 'fixtures/out1/p1'))
-			compare(path.join(__dirname, 'out1/p2'), path.join(__dirname, 'fixtures/out1/p2'))
+			compare(p('out1/p1'), p('fixtures/out1/p1'));
+			compare(p('out1/p2'), p('fixtures/out1/p2'));
 			done();
 		});
 	});
 
 	it('should import projects with resource versioning', function(done) {
 		importer.defaults({
-			out: path.join(__dirname, 'out2'),
+			out: p('out2'),
 			rewriteScheme: function(data) {
 				return '/-/' + data.version + data.url;
 			}
@@ -48,11 +53,19 @@ describe('Project importer', function() {
 
 		console.log('');
 
-		importer.importFrom(path.join(__dirname, 'in'), function(err) {
+		importer.importFrom(p('in'), function(err) {
 			assert(!err);
-			compare(path.join(__dirname, 'out2/p1'), path.join(__dirname, 'fixtures/out2/p1'))
-			compare(path.join(__dirname, 'out2/p2'), path.join(__dirname, 'fixtures/out2/p2'))
+			compare(p('out2/p1'), p('fixtures/out2/p1'));
+			compare(p('out2/p2'), p('fixtures/out2/p2'));
 			done();
 		});
+	});
+
+	it('should run Grunt task', function() {
+		// test generated data from Grunt task that 
+		// must be performed *before* test suite
+		console.log('');
+		compare(p('out-grunt/p1'), p('fixtures/out2/p1'));
+		compare(p('out-grunt/p2'), p('fixtures/out2/p2'));
 	});
 });

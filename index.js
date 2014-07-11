@@ -5,6 +5,7 @@ var async = require('async');
 var chalk = require('chalk');
 var locator = require('./lib/locator');
 var importer = require('./lib/importer');
+var utils = require('./lib/utils');
 
 var defaults = {
 	xsl: path.join(__dirname, 'xsl/main.xsl'),
@@ -39,30 +40,15 @@ function getFileHash(file) {
 	return hashLookup[file];
 }
 
-function copy(dest) {
-	for (var i = 1, il = arguments.length, src; i < il; i++) {
-		src = arguments[i];
-		if (!src) {
-			continue;
-		}
-
-		for (var p in src) {
-			dest[p] = src[p];
-		}
-	}
-
-	return dest;
-}
-
 module.exports = {
 	/**
 	 * Задаёт или возвращает базовые настройки для всех проектов
 	 * @param  {Object} value Новые базовые настройки
 	 * @return {Object}
 	 */
-	defaults: function(value) {
+	defaults: function(value, overwrite) {
 		if (value) {
-			defaults = copy(defaults, value);
+			defaults = overwrite ? value : utils.extend({}, defaults, value);
 		}
 
 		return defaults;
@@ -80,7 +66,7 @@ module.exports = {
 	 */
 	importProject: function(project, callback) {
 		// prepare project config
-		var config = copy({}, defaults, project);
+		var config = utils.extend({}, defaults, project);
 		if (!config.dest) {
 			config.dest = path.join(config.out, config.prefix);
 		}
@@ -103,6 +89,8 @@ module.exports = {
 			configs = {};
 		}
 
+		configs = configs || {};
+
 		var self = this;
 		async.waterfall([
 			function(callback) {
@@ -110,7 +98,7 @@ module.exports = {
 			},
 			function(projects, callback) {
 				async.each(projects, function(project, callback) {
-					self.importProject(copy({}, project, configs[project.name]), callback);
+					self.importProject(utils.extend({}, project, configs[project.name]), callback);
 				}, callback);
 			}
 		], callback);
