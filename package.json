@@ -1,5 +1,5 @@
 {
-  "name": "4game-import",
+  "name": "site-import",
   "version": "1.0.0",
   "description": "Импорт подсайтов в 4game",
   "main": "index.js",
@@ -15,6 +15,7 @@
     "css-importer": "git+https://github.com/InnovaCo/css-importer.git",
     "findit": "^2.0.0",
     "glob": "^4.0.3",
+    "html-importer": "git+https://github.com/InnovaCo/html-importer.git",
     "mkdirp": "^0.5.0",
     "postcss": "^1.0.0"
   },
