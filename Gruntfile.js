@@ -7,7 +7,8 @@ module.exports = function(grunt) {
 				dest: './test/out-grunt',
 				options: {
 					'sample-project': {
-						xsl: 'xsl/main.xsl',
+						xsl: 'main.xsl',
+						xslOptions: {cwd: 'xsl'},
 						rewriteScheme: function(data) {
 							return '/-/' + data.version + data.url;
 						}

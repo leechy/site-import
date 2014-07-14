@@ -4,7 +4,7 @@
   "description": "Импорт подсайтов в 4game",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/grunt test && ./node_modules/.bin/mocha --reporter dot"
+    "test": "./node_modules/.bin/grunt test && ./node_modules/.bin/mocha --reporter list"
   },
   "author": "Sergey Chikuyonok",
   "license": "MIT",

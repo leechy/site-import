@@ -8,7 +8,8 @@ var importer = require('./lib/importer');
 var utils = require('./lib/utils');
 
 var defaults = {
-	xsl: path.join(__dirname, 'xsl/main.xsl'),
+	xsl: 'main.xsl',
+	xslOptions: {cwd: path.join(__dirname, 'xsl')},
 	out: './out',
 	rewriteScheme: null,
 	transform: function(url, info) {

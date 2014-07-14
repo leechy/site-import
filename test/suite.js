@@ -18,7 +18,6 @@ function compare(folder1, folder2) {
 		var hash1 = crc(fs.readFileSync(path.join(folder1, f)));
 		var hash2 = crc(fs.readFileSync(path.join(folder2, f)));
 
-		console.log('Comparing', chalk.bold(f));
 		assert.equal(hash1, hash2, 'Comparing ' + f);
 	});
 }
