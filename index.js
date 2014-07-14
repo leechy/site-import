@@ -11,6 +11,8 @@ var defaults = {
 	xsl: 'main.xsl',
 	xslOptions: {cwd: path.join(__dirname, 'xsl')},
 	out: './out',
+	files: '**/*.*',
+	ignoreFiles: ['**/node_modules/**'],
 	rewriteScheme: null,
 	transform: function(url, info) {
 		if (this.rewriteScheme && info.actual) {
