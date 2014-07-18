@@ -3,16 +3,13 @@ var path = require('path');
 var crc = require('crc');
 var async = require('async');
 var chalk = require('chalk');
+var utils = require('importer-utils');
 var locator = require('./lib/locator');
 var importer = require('./lib/importer');
-var utils = require('./lib/utils');
 
 var defaults = {
-	xsl: 'main.xsl',
-	xslOptions: {cwd: path.join(__dirname, 'xsl')},
+	xsl: {src: 'main.xsl', cwd: path.join(__dirname, 'xsl')},
 	out: './out',
-	files: '**/*.*',
-	ignoreFiles: ['**/node_modules/**'],
 	rewriteScheme: null,
 	transform: function(url, info) {
 		if (this.rewriteScheme && info.actual) {

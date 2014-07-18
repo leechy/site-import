@@ -26,8 +26,8 @@
  * }
  */
 module.exports = function(grunt) {
+	var utils = require('importer-utils');
 	var importer = require('../');
-	var utils = require('../lib/utils');
 
 	function extractDefaultConfig(config) {
 		var result = utils.extend({}, config);
