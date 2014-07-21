@@ -15,10 +15,12 @@ function compare(folder1, folder2) {
 
 	// compare file contents
 	list1.forEach(function(f) {
-		var hash1 = crc(fs.readFileSync(path.join(folder1, f)));
-		var hash2 = crc(fs.readFileSync(path.join(folder2, f)));
+		var content1 = fs.readFileSync(path.join(folder1, f));
+		var content2 = fs.readFileSync(path.join(folder2, f));
+		var hash1 = crc(content1);
+		var hash2 = crc(content2);
 
-		assert.equal(hash1, hash2, 'Comparing ' + f);
+		assert.equal(hash1, hash2, 'Comparing ' + f + ':\n\n' + content1 + '\n----------\n' + content2);
 	});
 }
 
