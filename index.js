@@ -98,7 +98,7 @@ module.exports = {
 			},
 			function(projects, callback) {
 				async.each(projects, function(project, callback) {
-					self.importProject(utils.extend({}, project, configs[project.name]), callback);
+					self.importProject(utils.extend({}, project, configs[project.name] || configs[project.project]), callback);
 				}, callback);
 			}
 		], callback);

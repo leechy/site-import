@@ -4,8 +4,9 @@ var assert = require('assert');
 var glob = require('glob-all');
 var crc = require('crc').crc32;
 var chalk = require('chalk');
-var importer = require('../');
 var grunt = require('grunt');
+var del = require('del');
+var importer = require('../');
 
 function normalize(text) {
 	return text.split(/\r?\n/)
@@ -19,7 +20,7 @@ function compare(folder1, folder2) {
 	var list1 = glob.sync('**/*.*', {cwd: folder1}).sort();
 	var list2 = glob.sync('**/*.*', {cwd: folder2}).sort();
 
-	assert.deepEqual(list1, list2);
+	assert.deepEqual(list1, list2, 'Comparing contents of ' + folder1 + ' and ' + folder2);
 
 	// compare file contents
 	list1.forEach(function(f) {
@@ -37,6 +38,10 @@ function p(dst) {
 }
 
 describe('Project importer', function() {
+	before(function() {
+		del.sync(['out1/**/*.*', 'out2/**/*.*'], {cwd: __dirname});
+	});
+
 	it('should import simple projects', function(done) {
 		importer.defaults({
 			out: p('out1')
