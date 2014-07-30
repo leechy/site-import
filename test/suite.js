@@ -42,7 +42,7 @@ describe('Project importer', function() {
 		del.sync(['out1/**/*.*', 'out2/**/*.*'], {cwd: __dirname});
 	});
 
-	it('should import simple projects', function(done) {
+	it('simple projects', function(done) {
 		importer.defaults({
 			out: p('out1')
 		});
@@ -57,7 +57,7 @@ describe('Project importer', function() {
 		});
 	});
 
-	it('should import projects with resource versioning', function(done) {
+	it('projects with resource versioning', function(done) {
 		importer.defaults({
 			out: p('out2'),
 			rewriteScheme: function(data) {
@@ -75,11 +75,15 @@ describe('Project importer', function() {
 		});
 	});
 
-	it('should run Grunt task', function() {
+	it('Grunt task result', function() {
 		// test generated data from Grunt task that 
 		// must be performed *before* test suite
 		console.log('');
 		compare(p('out-grunt/p1'), p('fixtures/out2/p1'));
 		compare(p('out-grunt/p2'), p('fixtures/out2/p2'));
+
+		compare(p('out-html'), p('fixtures/html'));
+		compare(p('out-import1'), p('fixtures/html/p1'));
+		compare(p('out-import2'), p('fixtures/html/p2'));
 	});
 });
