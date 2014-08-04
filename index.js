@@ -3,7 +3,6 @@ var path = require('path');
 var EventEmitter = require('events').EventEmitter;
 var crc = require('crc');
 var async = require('async');
-var chalk = require('chalk');
 var utils = require('importer-utils');
 var locator = require('./lib/locator');
 var importer = require('./lib/importer');
