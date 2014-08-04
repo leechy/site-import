@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var EventEmitter = require('events').EventEmitter;
 var crc = require('crc');
 var async = require('async');
 var chalk = require('chalk');
@@ -40,7 +41,7 @@ function getFileHash(file) {
 	return hashLookup[file];
 }
 
-module.exports = {
+module.exports = utils.extend(new EventEmitter(), {
 	/**
 	 * Задаёт или возвращает базовые настройки для всех проектов
 	 * @param  {Object} value Новые базовые настройки
@@ -71,7 +72,7 @@ module.exports = {
 			config.dest = path.join(config.out, config.prefix);
 		}
 
-		console.log('Importing', chalk.green(config.name), 'to', chalk.yellow(config.prefix));
+		this.emit('import', config);
 		importer(config, callback);
 	},
 
@@ -107,4 +108,4 @@ module.exports = {
 	resetCache: function() {
 		hashLookup = {};
 	}
-};
+});

@@ -47,8 +47,6 @@ describe('Project importer', function() {
 			out: p('out1')
 		});
 
-		console.log('');
-
 		importer.importFrom(p('in'), function(err) {
 			assert(!err);
 			compare(p('out1/p1'), p('fixtures/out1/p1'));
@@ -65,8 +63,6 @@ describe('Project importer', function() {
 			}
 		});
 
-		console.log('');
-
 		importer.importFrom(p('in'), function(err) {
 			assert(!err);
 			compare(p('out2/p1'), p('fixtures/out2/p1'));
@@ -78,7 +74,6 @@ describe('Project importer', function() {
 	it('Grunt task result', function() {
 		// test generated data from Grunt task that 
 		// must be performed *before* test suite
-		console.log('');
 		compare(p('out-grunt/p1'), p('fixtures/out2/p1'));
 		compare(p('out-grunt/p2'), p('fixtures/out2/p2'));
 
